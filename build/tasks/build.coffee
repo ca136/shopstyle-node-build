@@ -122,8 +122,13 @@ module.exports = (gulp, config) ->
     )
 
   gulp.task 'copy:assets', ->
+    componenentAssets = [
+      'client/**/*'
+      '!client/**/*.{ts,js}'
+    ]
+
     gulp
-      .src 'client/assets/**/*', base: 'client/assets'
+      .src componenentAssets, base: 'client'
       .pipe gulp.dest 'dist/client'
 
   gulp.task 'develop', (cb) ->
@@ -160,6 +165,7 @@ module.exports = (gulp, config) ->
     watch 'config/**/*',                            ['config']
     watch 'common/{schemas,models}/**/*.json',      ['schemas']
     watch '{bower,tsd,package}.json',               ['install']
+    watch 'client/**/*',                            ['copy:assets']
     null
 
   # TODO: fix the dtsgen lib it sucks
